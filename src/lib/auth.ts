@@ -1,8 +1,8 @@
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { NextAuthOptions } from 'next-auth';
+import {PrismaAdapter} from '@next-auth/prisma-adapter';
+import {NextAuthOptions} from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import db from '../../prisma/db';
-import { compare } from 'bcrypt';
+import {compare} from 'bcrypt';
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(db),
@@ -14,41 +14,42 @@ export const authOptions: NextAuthOptions = {
         strategy: 'jwt'
     },
     providers: [
-      CredentialsProvider({
-        name: "Credentials",
+        CredentialsProvider({
+            name: "Credentials",
 
-        credentials: {
-          email: { label: "Email", type: "text", placeholder: "jsmith@gmail.com" },
-          password: { label: "Password", type: "password" }
-        },
-        async authorize(credentials) {
+            credentials: {
+                email: {label: "Email", type: "text", placeholder: "jsmith@gmail.com"},
+                password: {label: "Password", type: "password"}
+            },
+            async authorize(credentials) {
 
-            if (!credentials?.email || !credentials?.password) {
-                return null;
+                if (!credentials?.email || !credentials?.password) {
+                    return null;
+                }
+
+                const existingResident = await db.resident.findUnique({
+                    where: {email: credentials?.email}
+                })
+
+                if (!existingResident) {
+                    return null;
+                }
+
+                const passwordMatch = await compare(credentials.password, existingResident.password);
+                console.log(passwordMatch)
+                if (!passwordMatch) {
+                    return null;
+                }
+
+                return {
+                    id: existingResident.residentId,
+                    name: existingResident.name,
+                    username: existingResident.username,
+                    email: existingResident.email,
+                    role: existingResident.role
+                }
             }
-
-            const existingResident = await db.resident.findUnique ({
-                where: {email: credentials?.email}
-            })
-
-            if (!existingResident) {
-                return null;
-            }
-
-            const passwordMatch = await compare(credentials.password, existingResident.password);
-            console.log(passwordMatch)
-            if (!passwordMatch) {
-                return null;
-            }
-
-            return {
-                id: existingResident.residentId,
-                name: existingResident.name,
-                username: existingResident.username,
-                email: existingResident.email,
-            }
-        }
-      })
+        })
     ],
     callbacks: {
         async jwt({token, user}) {
@@ -59,11 +60,12 @@ export const authOptions: NextAuthOptions = {
                     name: user.name,
                     username: user.username,
                     email: user.email,
+                    role: user.role
                 }
             }
             return token
         },
-        async session ({session, token}) {
+        async session({session, token}) {
             return {
                 ...session,
                 user: {

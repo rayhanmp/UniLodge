@@ -25,16 +25,11 @@ npm run dev
 
 Buka alamat [http://localhost:3000](http://localhost:3000) dengan aplikasi peramban Anda dan mulailah mencoba fitur Gym Master.
 
-Anda dapat mengubah aplikasi Gym Master dengan membuka berkas `app` lalu mengubah komponen (di berkas `/components`) maupun API (di folder `/api`)
+Anda dapat mengubah aplikasi UniLodge dengan membuka berkas `app` lalu mengubah komponen (di berkas `/components`) maupun API (di folder `/api`)
 
 ## _Tech Stack_
 
-Program ini ditulis dengan `NextJS` yang merupakan sebuah _full-stack framework_ yang dibangun di atas NodeJS dan ReactJS. Hal ini juga membuat GymMaster memiliki arsitektur monolitik. Proses styling dilakukan dengan `Tailwind CSS` dan pustaka komponen DaisyUI.
+Program ini ditulis dengan `NextJS` yang merupakan sebuah _full-stack framework_ yang dibangun di atas NodeJS dan ReactJS. Hal ini juga membuat GymMaster memiliki arsitektur monolitik. Proses styling dilakukan dengan `Tailwind CSS`.
 
-Proses penyimpanan data menggunakan DBMS `PostgreSQL` yang di-host oleh Supabase. Bagian _back-end_ berinteraksi dengan basis data menggunakan object-relational-mapper (ORM) bernama `Prisma`. Proses autentikasi ditangani oleh pustaka NextJS bernama Next-Auth.
+Proses penyimpanan data menggunakan DBMS `PostgreSQL` yang di-_host_ oleh Supabase. Bagian _back-end_ berinteraksi dengan basis data menggunakan object-relational-mapper (ORM) bernama `Prisma`. Proses autentikasi ditangani oleh pustaka NextJS bernama Next-Auth.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

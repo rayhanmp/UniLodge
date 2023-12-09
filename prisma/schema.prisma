@@ -15,4 +15,14 @@ model resident {
     name         String
     phone        String
     status       Boolean    @default(false)
+    laundry      laundry[]
+}
+
+model laundry {
+  laundryOrderId  Int       @id @default(autoincrement())
+  residentId      Int       
+  resident        resident  @relation(fields: [residentId], references: [residentId])
+  weight          Int    
+  createdAt       DateTime  @default(now())
+  status          Boolean   @default(false)
 }

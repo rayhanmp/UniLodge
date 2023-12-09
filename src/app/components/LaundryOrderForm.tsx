@@ -50,15 +50,25 @@ export default function Laundry() {
     //     <button type="submit">Place Order</button>
     //   </form>
     // </div>
-    <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px', border: '1px solid #ccc', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
-      <h1 style={{ textAlign: 'center', color: '#333' }}>Laundry Order</h1>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <label style={{ marginBottom: '10px' }}>
+    <div className="max-w-md mx-auto p-4 border rounded shadow-md">
+      <h1 className="text-3xl font-semibold text-center mb-6">Laundry Order</h1>
+      <form onSubmit={handleSubmit} className="flex flex-col items-center">
+        <label className="mb-4">
           Weight (in kg):
-          <input style={{ padding: '8px', fontSize: '16px', width: '100%', boxSizing: 'border-box', marginBottom: '10px' }} type="number" value={weight} onChange={handleWeightChange} />
+          <input
+            className="p-2 text-lg border rounded w-full"
+            type="number"
+            value={weight}
+            onChange={handleWeightChange}
+          />
         </label>
-        <p style={{ fontSize: '18px', fontWeight: 'bold', marginTop: '10px' }}>Total Price: {totalPrice}</p>
-        <button style={{ padding: '10px', fontSize: '18px', backgroundColor: '#4caf50', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }} type="submit">Place Order</button>
+        <p className="text-xl font-bold mt-2">Total Price: {totalPrice}</p>
+        <button
+          className="bg-green-500 text-white py-2 px-4 mt-4 rounded cursor-pointer hover:bg-green-600"
+          type="submit"
+        >
+          Place Order
+        </button>
       </form>
     </div>
   );

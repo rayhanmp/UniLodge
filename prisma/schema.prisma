@@ -8,17 +8,19 @@ datasource db {
 }
 
 model resident {
-  residentId Int         @id @default(autoincrement())
-  username   String      @unique
-  password   String
-  email      String      @unique
-  name       String
-  phone      String
-  status     Boolean     @default(false)
-  role       String?     @default("resident")
-  foodOrder  foodOrder[]
-  keluhan    keluhan[]
-  laundry    laundry[]
+  residentId     Int              @id @default(autoincrement())
+  username       String           @unique
+  password       String
+  email          String           @unique
+  name           String
+  phone          String
+  status         Boolean          @default(false)
+  role           String?          @default("resident")
+  Message        Message[]
+  foodOrder      foodOrder[]
+  keluhan        keluhan[]
+  laundry        laundry[]
+  other_services other_services[]
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -66,4 +68,24 @@ model respon_keluhan {
   id_keluhan Int     @id
   solusi     String
   keluhan    keluhan @relation(fields: [id_keluhan], references: [id_keluhan], onDelete: Cascade)
+}
+
+model Message {
+  id         String   @id
+  message    String
+  residentId Int
+  createdAt  DateTime @default(now()) @db.Timestamptz(6)
+  resident   resident @relation(fields: [residentId], references: [residentId])
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model other_services {
+  id                Int      @id @default(autoincrement())
+  username          String
+  topic             String   @default("")
+  description       String   @default("")
+  preferredSolution String   @default("")
+  resolved          Boolean  @default(false)
+  resident          resident @relation(fields: [username], references: [username], onDelete: NoAction, onUpdate: NoAction)
 }

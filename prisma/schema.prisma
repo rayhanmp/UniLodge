@@ -8,22 +8,62 @@ datasource db {
 }
 
 model resident {
-  residentId Int     @id @default(autoincrement())
-  username   String  @unique
+  residentId Int         @id @default(autoincrement())
+  username   String      @unique
   password   String
-  email      String  @unique
+  email      String      @unique
   name       String
   phone      String
-  status     Boolean @default(false)
-  role       String? @default("resident")
-    laundry      laundry[]
+  status     Boolean     @default(false)
+  role       String?     @default("resident")
+  foodOrder  foodOrder[]
+  keluhan    keluhan[]
+  laundry    laundry[]
 }
 
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model foodMenu {
+  id_food     Int         @id @default(autoincrement())
+  food_name   String?
+  price       Int?
+  description String?
+  foodOrder   foodOrder[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model foodOrder {
+  id_food_order Int       @id @default(autoincrement())
+  residentId    Int?
+  id_food       Int?
+  status        Boolean?  @default(false)
+  created_at    DateTime  @default(now()) @db.Timestamptz(6)
+  foodMenu      foodMenu? @relation(fields: [id_food], references: [id_food], onDelete: NoAction, onUpdate: NoAction)
+  resident      resident? @relation(fields: [residentId], references: [residentId], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model keluhan {
+  id_keluhan     Int             @id @default(autoincrement())
+  id_resident    Int
+  keluhan        String
+  status         String
+  resident       resident        @relation(fields: [id_resident], references: [residentId], onDelete: Cascade)
+  respon_keluhan respon_keluhan?
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model laundry {
-  laundryOrderId  Int       @id @default(autoincrement())
-  residentId      Int
-  resident        resident  @relation(fields: [residentId], references: [residentId])
-  weight          Int
-  createdAt       DateTime  @default(now())
-  status          Boolean   @default(false)
+  laundryOrderId Int       @id @default(autoincrement())
+  residentId     Int
+  weight         Int?      @default(0)
+  createdAt      DateTime? @db.Timestamp(6)
+  status         Boolean?  @default(false)
+  resident       resident  @relation(fields: [residentId], references: [residentId], onDelete: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model respon_keluhan {
+  id_keluhan Int     @id
+  solusi     String
+  keluhan    keluhan @relation(fields: [id_keluhan], references: [id_keluhan], onDelete: Cascade)
 }

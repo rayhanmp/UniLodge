@@ -1,9 +1,8 @@
-import db from "../../../../prisma/db";
-import {NextApiRequest, NextApiResponse} from 'next';
-import {NextResponse} from "next/server";
-import * as z from "zod"
-import {other_services} from "../../../../types/models"
-
+import { NextResponse } from 'next/server';
+import * as z from 'zod';
+import db from '../../../../prisma/db';
+import { other_services } from '../../../../types/models';
+import {ZodBoolean, ZodNumber, ZodString} from "zod";
 
 const serviceSchema = z.object({
     id: z.number(),
@@ -11,21 +10,20 @@ const serviceSchema = z.object({
     topic: z.string(),
     description: z.string(),
     preferredSolution: z.string(),
-    resolved: z.boolean()
-})
+    resolved: z.boolean(),
+});
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET() {
     try {
-        const other_services = await db.other_services.findMany({
+        const otherServices = await db.other_services.findMany({
             orderBy: {
                 id: 'asc',
             },
         });
-        // console.log('Fetched Fields:', fields);
-        return NextResponse.json(other_services, {status: 200});
+        return NextResponse.json(otherServices, { status: 200 });
     } catch (error: any) {
-        console.error('Error fetching fields:', error.message);
-        return NextResponse.json('Internal Server Error' , {status: 500});
+        console.error('Error fetching services:', error.message);
+        return NextResponse.json('Internal Server Error', { status: 500 });
     } finally {
         await db.$disconnect();
     }
@@ -34,19 +32,20 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const parsedService: other_services = serviceSchema.parse(body);
+        const { id, ...parsedService } = serviceSchema.parse(body);
 
-        // Create a new object with the field_id from the context
+        // Explicitly cast to other_servicesUncheckedCreateInput
         const service = await db.other_services.create({
             data: {
-                ...parsedService
-            },
+                ...parsedService,
+            } as other_services,
         });
 
-        return NextResponse.json({"service": service, message: "Field created successfully"}, {status: 200});
-
+        return NextResponse.json({ service, message: 'Service created successfully' }, { status: 200 });
     } catch (error) {
-        console.error("Error", error)
-        return new Response("An error occurred", {status: 500});
+        console.error('Error', error);
+        return NextResponse.json('An error occurred', { status: 500 });
     }
 }
+
+

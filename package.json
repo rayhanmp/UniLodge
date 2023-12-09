@@ -17,6 +17,8 @@
     "next": "14.0.3",
     "prisma": "^5.7.0",
     "prisma-client": "^0.0.0",
+    "pusher": "^5.2.0",
+    "pusher-js": "^8.4.0-rc2",
     "radix-ui": "^1.0.1",
     "react": "^18",
     "react-dom": "^18",

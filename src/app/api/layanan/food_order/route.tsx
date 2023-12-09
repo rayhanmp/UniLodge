@@ -34,3 +34,15 @@ export async function POST(req: Request) {
           return NextResponse.json({message: "Method not allowed"}, {status: 405})
       }
     }
+
+    export async function GET() {
+      try {
+        const foodOrder = await db.foodOrder.findMany();
+        return NextResponse.json(foodOrder);
+      } catch (error) {
+        console.error('Error fetching food order:', error);
+        return NextResponse.error();
+      } finally {
+        await db.$disconnect();
+      }
+    }

@@ -31,7 +31,7 @@ export async function POST(req: Request) {
 
         const keluhan = await db.keluhan.create({
             data: {
-                id_resident: body.keluhan,
+                id_resident: body.id_resident,
                 keluhan: body.keluhan,
                 status: "unresolved"
             }

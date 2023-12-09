@@ -1,7 +1,5 @@
-// pages/laundry.js
 'use client'
-
-import { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useSession } from 'next-auth/react';
 
 export default function Laundry() {
@@ -9,13 +7,16 @@ export default function Laundry() {
   const [weight, setWeight] = useState('');
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newWeight = e.target.value;
-    setWeight(newWeight);
+  const handleWeightChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newWeight = parseInt(e.target.value, 10);
 
-    // Calculate total price based on the formula (7000 * weight)
-    const newTotalPrice = 7000 * parseInt(newWeight, 10);
-    setTotalPrice(newTotalPrice);
+    if (!isNaN(newWeight) && newWeight >= 0) {
+      setWeight(newWeight.toString());
+
+      // Calculate total price based on the formula (7000 * weight)
+      const newTotalPrice = 7000 * newWeight;
+      setTotalPrice(newTotalPrice);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -28,7 +29,7 @@ export default function Laundry() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        residentId: session?.user.id, // Assuming you have the residentId in the session
+        residentId: session?.user?.id, // Assuming you have the residentId in the session
         weight: parseInt(weight, 10),
       }),
     });
@@ -39,26 +40,24 @@ export default function Laundry() {
   };
 
   return (
-    // <div>
-    //   <h1>Laundry Order</h1>
-    //   <form onSubmit={handleSubmit}>
-    //     <label>
-    //       Weight (in kg):
-    //       <input type="number" value={weight} onChange={handleWeightChange} />
-    //     </label>
-    //     <p>Total Price: {totalPrice}</p>
-    //     <button type="submit">Place Order</button>
-    //   </form>
-    // </div>
-    <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px', border: '1px solid #ccc', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
-      <h1 style={{ textAlign: 'center', color: '#333' }}>Laundry Order</h1>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <label style={{ marginBottom: '10px' }}>
+    <div className="max-w-md mx-auto p-4 border rounded shadow-md">
+      <form onSubmit={handleSubmit} className="flex flex-col items-center">
+        <label className="mb-4">
           Weight (in kg):
-          <input style={{ padding: '8px', fontSize: '16px', width: '100%', boxSizing: 'border-box', marginBottom: '10px' }} type="number" value={weight} onChange={handleWeightChange} />
+          <input
+            className="p-2 text-lg border rounded w-full text-black"
+            type="number"
+            value={weight}
+            onChange={handleWeightChange}
+          />
         </label>
-        <p style={{ fontSize: '18px', fontWeight: 'bold', marginTop: '10px' }}>Total Price: {totalPrice}</p>
-        <button style={{ padding: '10px', fontSize: '18px', backgroundColor: '#4caf50', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }} type="submit">Place Order</button>
+        <p className="text-xl font-bold mt-2">Total Price: Rp{totalPrice},00</p>
+        <button
+          className="bg-green-500 text-white py-2 px-4 mt-4 rounded cursor-pointer hover:bg-green-600"
+          type="submit"
+        >
+          Place Order
+        </button>
       </form>
     </div>
   );

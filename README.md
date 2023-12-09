@@ -12,7 +12,7 @@ git clone https://github.com/rayhanmp/UniLodge.git
 ```
 Unduh versi LTS NodeJS melalui utas [https://nodejs.org/en/](https://nodejs.org/en/), lakukan instalasi, lalu buka _command prompt_ dan berpindahlah ke berkas _repository_ dengan:
 ```bash
-cd gymmaster
+cd unilodge
 ``` 
 Unduh semua dependensi yang ada dengan perintah:
 ```bash

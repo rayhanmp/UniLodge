@@ -17,6 +17,7 @@
 }
 
 body {
+    min-height: 1080px;
     color: white;
     background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
 }

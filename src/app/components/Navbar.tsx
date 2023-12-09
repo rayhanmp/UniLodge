@@ -27,7 +27,7 @@ const Navbar = () => {
                         {/*/>*/}
                         <Link href="/" className="hover:underline mt-2">File complaint</Link>
                         <Link href="/" className="hover:underline mt-2">Food</Link>
-                        <Link href="/" className="hover:underline mt-2">Laundry</Link>
+                        <Link href="/pages/laundry" className="hover:underline mt-2">Laundry</Link>
                         <Link href="/" className="hover:underline mt-2">Others</Link>
                         <Link href="/" className="hover:underline mt-2">Chat App</Link>
                         {session?.user.role === "admin" && (

@@ -23,7 +23,7 @@ Lalu, jalankan perintah berikut:
 npm run dev
 ````
 
-Buka alamat [http://localhost:3000](http://localhost:3000) dengan aplikasi peramban Anda dan mulailah mencoba fitur Gym Master.
+Buka alamat [http://localhost:3000](http://localhost:3000) dengan aplikasi peramban Anda dan mulailah mencoba fitur UniLodge.
 
 Anda dapat mengubah aplikasi UniLodge dengan membuka berkas `app` lalu mengubah komponen (di berkas `/components`) maupun API (di folder `/api`)
 

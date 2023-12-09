@@ -32,12 +32,13 @@ export async function GET() {
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const parsedService = serviceSchema.parse(body);
+        const { id, ...parsedService } = serviceSchema.parse(body);
 
+        // Explicitly cast to other_servicesUncheckedCreateInput
         const service = await db.other_services.create({
             data: {
                 ...parsedService,
-            },
+            } as other_services,
         });
 
         return NextResponse.json({ service, message: 'Service created successfully' }, { status: 200 });
@@ -46,3 +47,5 @@ export async function POST(req: Request) {
         return NextResponse.json('An error occurred', { status: 500 });
     }
 }
+
+

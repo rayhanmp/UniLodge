@@ -1,8 +1,12 @@
-// pages/laundry/index.tsx
+import React from 'react'
 import SolutionForm from '../../components/SolutionForm';
 import ComplaintDesc from '../../components/ComplaintDesc'
 
-const DetailedComplaintPage = (id_keluhan: number) => {
+interface keluhanProp {
+    id_keluhan: number
+}
+
+const DetailedComplaintPage: React.FC<keluhanProp> = ({id_keluhan}) => {
   return (
     <div>
       <h1>Complaint Solution Page</h1>
@@ -11,3 +15,5 @@ const DetailedComplaintPage = (id_keluhan: number) => {
     </div>
   );
 }
+
+export default DetailedComplaintPage

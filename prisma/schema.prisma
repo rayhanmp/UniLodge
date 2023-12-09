@@ -3,16 +3,17 @@ generator client {
 }
 
 datasource db {
-    provider = "postgresql"
-    url = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model resident {
-    residentId   Int        @id @default(autoincrement())
-    username     String     @unique
-    password     String
-    email        String     @unique
-    name         String
-    phone        String
-    status       Boolean    @default(false)
+  residentId Int     @id @default(autoincrement())
+  username   String  @unique
+  password   String
+  email      String  @unique
+  name       String
+  phone      String
+  status     Boolean @default(false)
+  role       String? @default("resident")
 }

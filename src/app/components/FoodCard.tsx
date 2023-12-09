@@ -19,7 +19,7 @@ const FoodCard: React.FC<FoodCardProps> = ({ foodMenu }) => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  const handleButtonClick = () => {router.push(`/foodorder/${foodMenu.id_food}`);};
+  const handleButtonClick = () => {router.push(`/pages/foodorder/${foodMenu.id_food}`);};
 
   return (
     <div className={`bg-white rounded-lg shadow-md p-6 mb-4 cursor-pointer hover:shadow-lg transition-all`}>

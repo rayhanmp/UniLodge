@@ -1,9 +1,9 @@
-# Gym Master
+# UniLodge
 
 ## Deskripsi Singkat
-GymMaster merupakan perangkat lunak yang berfungsi untuk membantu proses manajemen gym. GymMaster dapat digunakan oleh admin dan _customer_.  GymMaster memfasilitasi usernya untuk melakukan _register_ dan _login_, dari sisi admin, Ia dapat membuka kelas, mengatur jadwal, harga kelas, dan _membership_, mengelola fasilitas gym, dan berkomunikasi dengan _customer_. Dari sisi customer, mereka dapat melihat kelas, memesan kelas, melihat jadwal kelas, dan berkomunikasi dengan _instructor_ atau admin. 
+UniLodge merupakan perangkat lunak yang berfungsi untuk membantu proses manajemen asrama. UniLodge dapat digunakan oleh _customer_.  UniLodge memfasilitasi usernya untuk melakukan _register_ dan _login_. User dapat mengakses fitur layanan keluhan untuk mengadukan keluhan yang dialami selama berada di lingkungan asrama. User juga dapat memesan makanan, memesan layanan laundry, dan layanan-layanan lainnya seperti parkir, keamanan, dsb.
 
-Sistem diharapkan dapat menjadi **_one-stop solution_** bagi pengguna sebagai pelanggan gym serta menjadi alat bantu manajemen seluruh aspek operasional maupun non operasional gym bagi pengelola gym (admin).
+Sistem diharapkan dapat menjadi **_one-stop solution_** bagi pengguna sebagai penghuni asrama serta menjadi alat bantu manajemen seluruh aspek operasional maupun non operasional asrama bagi pengelola asrama.
 
 ## Cara Menjalankan Aplikasi
 Pertama, lakukan _clone_ dengan perintah:

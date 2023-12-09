@@ -55,7 +55,6 @@ export default function Laundry() {
     //   </form>
     // </div>
     <div className="max-w-md mx-auto p-4 border rounded shadow-md">
-      <h1 className="text-3xl font-semibold text-center mb-6">Laundry Order</h1>
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <label className="mb-4">
           Weight (in kg):

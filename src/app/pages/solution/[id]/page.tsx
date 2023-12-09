@@ -1,6 +1,6 @@
 // pages/laundry/index.tsx
-import SolutionForm from '../../components/SolutionForm';
-import ComplaintDesc from '../../components/ComplaintDesc'
+import SolutionForm from '../../../components/SolutionForm';
+import ComplaintDesc from '../../../components/ComplaintDesc'
 
 const DetailedComplaintPage = (id_keluhan: number) => {
   return (

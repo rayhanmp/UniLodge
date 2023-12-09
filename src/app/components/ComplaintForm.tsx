@@ -2,8 +2,10 @@
 
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation'
 
 export default function Complaint() {
+  const router = useRouter();
   const { data: session } = useSession();
   const [complaint, setComplaint] = useState('');
 
@@ -27,6 +29,11 @@ export default function Complaint() {
       }),
     });
 
+    if (res.ok){
+      alert('Complaint submitted! It will be reviewed soon!')
+      router.push('/')
+    }
+
     // Handle the response from the server as needed
     const result = await res.json();
     console.log(result);
@@ -34,7 +41,7 @@ export default function Complaint() {
   
   return (
     <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px', border: '1px solid #ccc', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
-      <h1 style={{ textAlign: 'center', color: '#333' }}>File  Complaint</h1>
+      <h1 style={{ textAlign: 'center', color: 'white' }}>File  Complaint</h1>
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <label style={{ marginBottom: '10px' }}>
           Write Your Complaint:

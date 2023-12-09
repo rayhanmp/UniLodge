@@ -11,7 +11,7 @@ export async function GET(request: Request, {params}: {params: {id: number}}) {
   try {
     const foodMenuDetails = await db.foodMenu.findUnique({
       where: {
-        foodID: parsedFoodMenuID,
+        id_food: parsedFoodMenuID,
       },
     });
 

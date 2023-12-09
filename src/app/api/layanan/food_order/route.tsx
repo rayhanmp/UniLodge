@@ -6,9 +6,9 @@ export async function POST(req: Request) {
     if (req.method === 'POST') {
         try {
           const body = await req.json();
-          const {residentId, foodID} = body;
+          const {residentId, id_food} = body;
           const residentIdInt = parseInt(residentId, 10)
-          const foodIDInt = parseInt(foodID, 10)
+          const foodIDInt = parseInt(id_food, 10)
           if (isNaN(residentIdInt) ||isNaN(foodIDInt)) {
             throw new Error("Invalid residentId");
         }
@@ -17,7 +17,7 @@ export async function POST(req: Request) {
           const newFoodOrder = await db.foodOrder.create({
             data: {
               residentId,
-              foodID,
+              id_food,
             },
           });
     

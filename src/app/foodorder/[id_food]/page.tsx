@@ -12,8 +12,8 @@ interface FoodOrder {
 
 async function getFoodOrder(id_food: string): Promise<FoodOrder> {
   const res = await fetch(`/api/layanan/food_menu/${id_food}`, {
-    next: {
-      revalidate: 60,
+    headers: {
+      'Content-Type': 'application/json',
     },
   });
 
@@ -25,8 +25,6 @@ const FoodOrderDetails = () => {
   const { data: session } = useSession();
   const [isFoodOrderd, setIsFoodOrderd] = useState(false);
   const [foodOrder, setFoodOrder] = useState<FoodOrder | null>(null);
-  const [durationData, setDurationData] = useState(0);
-  const [membStatus, setMembStatus] = useState(false);
 
   useEffect(() => {
     const fetchFoodOrder = async () => {
@@ -46,14 +44,16 @@ const FoodOrderDetails = () => {
   
 
   const handleFoodOrder = async () => {
-      const userId = session?.user.id;
+      const residentId = session?.user.id;
     try{
-      const response = await fetch('/api/payment/', {
+      const response = await fetch('/api/layanan/food_order/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userId, membershipId: parseInt(id_food as string, 10) }),
+        body: JSON.stringify({ 
+          residentId: session?.user.id, 
+          id_food: parseInt(id_food as string, 10) }),
       });
 
       if (response.ok) {
@@ -63,27 +63,6 @@ const FoodOrderDetails = () => {
       } else {
         const errorData = await response.json();
         console.error('Error creating purchase:', errorData);
-      }
-
-
-      const putResponse = await fetch ('/api/users/' + userId, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({membershipStatus: membStatus, membershipDuration: durationData})
-      });
-      const body = JSON.stringify({membershipStatus: membStatus, membershipDuration: durationData})
-      console.log(durationData)
-      console.log(body)
-
-      if (putResponse.ok) {
-        const data = await putResponse.json();
-        console.log('Purchase created successfully:', data);
-        setIsFoodOrderd(true);
-      } else {
-        const errorData = await putResponse.json();
-        console.error('Error creating food order:', errorData);
       }
 
     } catch(error){
@@ -100,15 +79,14 @@ const FoodOrderDetails = () => {
       <div className='flex justify-center'>
       <div className="card bg-neutral shadow-lg rounded-lg p-6 w-full max-w-sm mt-16">
         <h2 className='text-xl text-center text-bold text-white'>Your Purchase Detail</h2>
-        <h3 className='my-4'>Food name : {foodOrder.food_name}</h3>
-        <h3 className='mb-4'>Total price : {foodOrder.price}</h3>
-        {/* Render other purchase details */}
+        <h3 className='my-4 text-white'>Food name : {foodOrder.food_name}</h3>
+        <h3 className='mb-4 text-white'>Total price : {foodOrder.price}</h3>
         {!isFoodOrderd && (
-          <button onClick={handleFoodOrder} className="btn btn-primary">
-            Purchase Now
+          <button onClick={handleFoodOrder} className="bg-blue-500 text-white hover:bg-blue-600 py-2 px-4 rounded transition-all">
+            Order Now
           </button>
         )}
-        {isFoodOrderd && <p className='text-green-600 text-center'>Purchase Successful!</p>}
+        {isFoodOrderd && <p className='text-green-600 text-center'>Order Successful!</p>}
       </div>
       </div>
     </main>

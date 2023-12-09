@@ -1,13 +1,12 @@
-// pages/laundry.js
 'use client'
 
-import { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useSession } from 'next-auth/react';
 
 export default function Laundry() {
-  const { data: session } = useSession();
-  const [weight, setWeight] = useState('');
-  const [totalPrice, setTotalPrice] = useState(0);
+    const { data: session } = useSession();
+    const [weight, setWeight] = useState('');
+    const [totalPrice, setTotalPrice] = useState(0);
 
   const handleWeightChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newWeight = parseInt(e.target.value, 10);
@@ -21,39 +20,27 @@ export default function Laundry() {
     }
   };
   
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+        // Call your API endpoint to create a laundry order
+        const res = await fetch('/api/layanan/laundry', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                residentId: session?.user?.id, // Assuming you have the residentId in the session
+                weight: parseInt(weight, 10),
+            }),
+        });
 
-    // Call your API endpoint to create a laundry order
-    const res = await fetch('/api/layanan/laundry', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        residentId: session?.user.id, // Assuming you have the residentId in the session
-        weight: parseInt(weight, 10),
-      }),
-    });
+        // Handle the response from the server as needed
+        const result = await res.json();
+        console.log(result);
+    };
 
-    // Handle the response from the server as needed
-    const result = await res.json();
-    console.log(result);
-  };
-
-  return (
-    // <div>
-    //   <h1>Laundry Order</h1>
-    //   <form onSubmit={handleSubmit}>
-    //     <label>
-    //       Weight (in kg):
-    //       <input type="number" value={weight} onChange={handleWeightChange} />
-    //     </label>
-    //     <p>Total Price: {totalPrice}</p>
-    //     <button type="submit">Place Order</button>
-    //   </form>
-    // </div>
+  return {
     <div className="max-w-md mx-auto p-4 border rounded shadow-md">
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <label className="mb-4">

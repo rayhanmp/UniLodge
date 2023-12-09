@@ -29,7 +29,7 @@ Anda dapat mengubah aplikasi UniLodge dengan membuka berkas `app` lalu mengubah 
 
 ## _Tech Stack_
 
-Program ini ditulis dengan `NextJS` yang merupakan sebuah _full-stack framework_ yang dibangun di atas NodeJS dan ReactJS. Hal ini juga membuat GymMaster memiliki arsitektur monolitik. Proses styling dilakukan dengan `Tailwind CSS`.
+Program ini ditulis dengan `NextJS` yang merupakan sebuah _full-stack framework_ yang dibangun di atas NodeJS dan ReactJS. Hal ini juga membuat UniLodge memiliki arsitektur monolitik. Proses _styling_ dilakukan dengan `Tailwind CSS`.
 
 Proses penyimpanan data menggunakan DBMS `PostgreSQL` yang di-_host_ oleh Supabase. Bagian _back-end_ berinteraksi dengan basis data menggunakan object-relational-mapper (ORM) bernama `Prisma`. Proses autentikasi ditangani oleh pustaka NextJS bernama Next-Auth.
 

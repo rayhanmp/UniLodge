@@ -15,7 +15,7 @@ const TwoColumnTable = ({ data }) => {
         {data.map((item) => (
           <tr key={item.id_keluhan}>
             <td>{item.keluhan}</td>
-            <td>{item.respon_keluhan.solusi}</td>
+            <td>{item.respon_keluhan?.solusi}</td>
           </tr>
         ))}
       </tbody>

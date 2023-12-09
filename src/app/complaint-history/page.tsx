@@ -14,9 +14,9 @@ const YourPage = () => {
 //   ];
 
     const {data: session} = useSession()
-    const sessionID = session?.user.id
+    const sessionID = Number(session?.user.id)
 
-    const [complaintSolutionData, setComplaintSolutionData] = useState('')
+    const [complaintSolutionData, setComplaintSolutionData] = useState([])
 
     const getComplaintSolution = async (id_resident: number) => {
         const req = await fetch(`/api/layanan/keluhan-solusi/${id_resident}`)

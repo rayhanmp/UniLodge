@@ -9,14 +9,18 @@ export default function Laundry() {
   const [weight, setWeight] = useState('');
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newWeight = e.target.value;
-    setWeight(newWeight);
-
-    // Calculate total price based on the formula (7000 * weight)
-    const newTotalPrice = 7000 * parseInt(newWeight, 10);
-    setTotalPrice(newTotalPrice);
+  const handleWeightChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newWeight = parseInt(e.target.value, 10);
+    
+    if (!isNaN(newWeight) && newWeight >= 0) {
+      setWeight(newWeight.toString());
+  
+      // Calculate total price based on the formula (7000 * weight)
+      const newTotalPrice = 7000 * newWeight;
+      setTotalPrice(newTotalPrice);
+    }
   };
+  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -56,13 +60,13 @@ export default function Laundry() {
         <label className="mb-4">
           Weight (in kg):
           <input
-            className="p-2 text-lg border rounded w-full"
+            className="p-2 text-lg border rounded w-full text-black"
             type="number"
             value={weight}
             onChange={handleWeightChange}
           />
         </label>
-        <p className="text-xl font-bold mt-2">Total Price: {totalPrice}</p>
+        <p className="text-xl font-bold mt-2">Total Price: Rp{totalPrice},00</p>
         <button
           className="bg-green-500 text-white py-2 px-4 mt-4 rounded cursor-pointer hover:bg-green-600"
           type="submit"

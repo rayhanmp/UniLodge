@@ -1,4 +1,4 @@
-import ComplaintForm from "../components/ComplaintForm";
+import ComplaintForm from "@/app/components/ComplaintForm";
 
 export default function ComplaintPage() {
   return (

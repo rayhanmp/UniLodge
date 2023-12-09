@@ -1,0 +1,118 @@
+'use client';
+import { useParams } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { useState, useEffect } from 'react';
+
+interface FoodOrder {
+  id_food: number;
+  food_name: string;
+  price: number;
+  description: string;
+}
+
+async function getFoodOrder(id_food: string): Promise<FoodOrder> {
+  const res = await fetch(`/api/layanan/food_menu/${id_food}`, {
+    next: {
+      revalidate: 60,
+    },
+  });
+
+  return res.json();
+}
+
+const FoodOrderDetails = () => {
+  const { id_food } = useParams();
+  const { data: session } = useSession();
+  const [isFoodOrderd, setIsFoodOrderd] = useState(false);
+  const [foodOrder, setFoodOrder] = useState<FoodOrder | null>(null);
+  const [durationData, setDurationData] = useState(0);
+  const [membStatus, setMembStatus] = useState(false);
+
+  useEffect(() => {
+    const fetchFoodOrder = async () => {
+      if (id_food) {
+        try {
+          const foodOrderData: FoodOrder = await getFoodOrder(id_food as string);
+          console.log('FoodOrder Data:', foodOrderData);
+          setFoodOrder(foodOrderData);
+        } catch (error) {
+          console.error('Error fetching food order data:', error);
+        }
+      }
+    };
+  
+    fetchFoodOrder();
+  }, [id_food]);
+  
+
+  const handleFoodOrder = async () => {
+      const userId = session?.user.id;
+    try{
+      const response = await fetch('/api/payment/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId, membershipId: parseInt(id_food as string, 10) }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Purchase created successfully:', data);
+        setIsFoodOrderd(true);
+      } else {
+        const errorData = await response.json();
+        console.error('Error creating purchase:', errorData);
+      }
+
+
+      const putResponse = await fetch ('/api/users/' + userId, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({membershipStatus: membStatus, membershipDuration: durationData})
+      });
+      const body = JSON.stringify({membershipStatus: membStatus, membershipDuration: durationData})
+      console.log(durationData)
+      console.log(body)
+
+      if (putResponse.ok) {
+        const data = await putResponse.json();
+        console.log('Purchase created successfully:', data);
+        setIsFoodOrderd(true);
+      } else {
+        const errorData = await putResponse.json();
+        console.error('Error creating food order:', errorData);
+      }
+
+    } catch(error){
+      console.log(error)
+    }
+  };
+
+  if (!foodOrder) {
+    return <div>Page is loading...</div>;
+  }
+
+  return (
+    <main>
+      <div className='flex justify-center'>
+      <div className="card bg-neutral shadow-lg rounded-lg p-6 w-full max-w-sm mt-16">
+        <h2 className='text-xl text-center text-bold text-white'>Your Purchase Detail</h2>
+        <h3 className='my-4'>Food name : {foodOrder.food_name}</h3>
+        <h3 className='mb-4'>Total price : {foodOrder.price}</h3>
+        {/* Render other purchase details */}
+        {!isFoodOrderd && (
+          <button onClick={handleFoodOrder} className="btn btn-primary">
+            Purchase Now
+          </button>
+        )}
+        {isFoodOrderd && <p className='text-green-600 text-center'>Purchase Successful!</p>}
+      </div>
+      </div>
+    </main>
+  );
+};
+
+export default FoodOrderDetails;

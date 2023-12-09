@@ -8,7 +8,7 @@ Sistem diharapkan dapat menjadi **_one-stop solution_** bagi pengguna sebagai pe
 ## Cara Menjalankan Aplikasi
 Pertama, lakukan _clone_ dengan perintah:
 ```bash
-git clone https://gitlab.informatika.org/tubes-rpl-g10/gymmaster.git
+git clone https://github.com/rayhanmp/UniLodge.git
 ```
 Unduh versi LTS NodeJS melalui utas [https://nodejs.org/en/](https://nodejs.org/en/), lakukan instalasi, lalu buka _command prompt_ dan berpindahlah ke berkas _repository_ dengan:
 ```bash

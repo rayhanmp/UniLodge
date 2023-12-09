@@ -1,7 +1,7 @@
 // pages/laundry.js
 'use client'
 
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { useSession } from 'next-auth/react';
 
 export default function Laundry() {
@@ -39,15 +39,26 @@ export default function Laundry() {
   };
 
   return (
-    <div>
-      <h1>Laundry Order</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
+    // <div>
+    //   <h1>Laundry Order</h1>
+    //   <form onSubmit={handleSubmit}>
+    //     <label>
+    //       Weight (in kg):
+    //       <input type="number" value={weight} onChange={handleWeightChange} />
+    //     </label>
+    //     <p>Total Price: {totalPrice}</p>
+    //     <button type="submit">Place Order</button>
+    //   </form>
+    // </div>
+    <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px', border: '1px solid #ccc', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+      <h1 style={{ textAlign: 'center', color: '#333' }}>Laundry Order</h1>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <label style={{ marginBottom: '10px' }}>
           Weight (in kg):
-          <input type="number" value={weight} onChange={handleWeightChange} />
+          <input style={{ padding: '8px', fontSize: '16px', width: '100%', boxSizing: 'border-box', marginBottom: '10px' }} type="number" value={weight} onChange={handleWeightChange} />
         </label>
-        <p>Total Price: {totalPrice}</p>
-        <button type="submit">Place Order</button>
+        <p style={{ fontSize: '18px', fontWeight: 'bold', marginTop: '10px' }}>Total Price: {totalPrice}</p>
+        <button style={{ padding: '10px', fontSize: '18px', backgroundColor: '#4caf50', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }} type="submit">Place Order</button>
       </form>
     </div>
   );
